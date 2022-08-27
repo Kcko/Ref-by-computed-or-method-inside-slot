@@ -1,9 +1,17 @@
 <template>
   {{ computedRef }}
+  <hr />
+  <div v-if="myProp">
+    {{ computedRefButton }}
+  </div>
+
+  <hr />
   <Foo :heading="refHeading" :textarea="refTextarea" :section="computedRef">
     <section ref="computedRef">
       <h2 ref="heading">Heading</h2>
       <textarea ref="textarea"></textarea>
+      <br />
+      <button ref="button">test</button>
     </section>
   </Foo>
 </template>
@@ -19,6 +27,7 @@ export default {
   data() {
     return {
       isMounted: false,
+      myProp: true,
     };
   },
   computed: {
@@ -26,6 +35,9 @@ export default {
       if (!this.isMounted) return;
       console.log(this.$refs.computedRef);
       return this.$refs.computedRef;
+    },
+    computedRefButton() {
+      return this.$refs.button;
     },
   },
   methods: {
@@ -39,6 +51,10 @@ export default {
 
   mounted() {
     this.isMounted = true;
+  },
+
+  updated() {
+    console.log(this.$refs);
   },
 };
 </script>
